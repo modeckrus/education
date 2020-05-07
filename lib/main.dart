@@ -1,52 +1,48 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
- 
-void main() => runApp(MyApp());
- 
-class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-  @override
-  _MyAppState createState() => _MyAppState();
+import 'localization/localizations.dart';
+ 
+void main() {
+  runApp(
+    MyApp()
+  );
 }
 
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return EasyLocalization(
-      child: App(),
-      supportedLocales: [
-        Locale('en', ''),
-        Locale('ru', '')
+    return MaterialApp(
+      localizationsDelegates: [
+        AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
       ],
-      path: 'resources/langs',
-      assetLoader: YamlAssetLoader(),
-      useOnlyLangCode: true,
+      supportedLocales: [
+        Locale('en', ""),
+        Locale("ru", ""),
+        Locale('fr', ''),
+      ],
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context).title,
+      theme: ThemeData.dark(),
+      home: MyHomePage(),
     );
   }
 }
 
-class App extends StatefulWidget {
-  App({Key key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key}) : super(key: key);
 
   @override
-  _AppState createState() => _AppState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _AppState extends State<App> {
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('title'.tr()),
-        ),
-        body: Center(
-          child: Text('huis'),
-        ),
-      ),
+    return Center(
+      child: Text(AppLocalizations.of(context).title),
     );
   }
 }
