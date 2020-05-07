@@ -1,4 +1,4 @@
-import 'dart:js';
+//import 'dart:js';
 
 import 'package:education/authentication/bloc/authentication_bloc.dart';
 import 'package:education/screens/splash_screen.dart';
