@@ -35,6 +35,13 @@ class AppLocalizations {
       desc: 'get weather button',
     );
   }
+  String get homescreen {
+    return Intl.message(
+      'HomeScreen',
+      name: 'homescreen',
+      desc: 'HomeScreen text'
+    );
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

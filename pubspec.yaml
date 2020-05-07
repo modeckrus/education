@@ -30,8 +30,8 @@ dependencies:
   firebase_auth: 
   cloud_firestore: 
   google_sign_in:
-  easy_localization: ^2.3.0
-  easy_localization_loader: ^0.0.2
+  flutter_bloc: 
+  equatable:
   
   
 
