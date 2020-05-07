@@ -8,19 +8,37 @@
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="education">
+  <meta name="apple-mobile-web-app-title" content="testplatform">
+  <meta name="google-signin-client_id" content="710015013776-rj90gf04omaqg9h61sao0rfs9go6va99.apps.googleusercontent.com">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 
-  <title>education</title>
+  <title>testplatform</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCzUq2mq1xT71LDQcWZeQmV3XofVDHG8i4",
+    authDomain: "education-modeck.firebaseapp.com",
+    databaseURL: "https://education-modeck.firebaseio.com",
+    projectId: "education-modeck",
+    storageBucket: "education-modeck.appspot.com",
+    messagingSenderId: "710015013776",
+    appId: "1:710015013776:web:6df291f105452ff61a1915",
+    measurementId: "G-V0ENWMP6KW"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
