@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>710015013776-c2p6ne6jfan0o3ukb87uctubm0sn4odu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.710015013776-c2p6ne6jfan0o3ukb87uctubm0sn4odu</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>710015013776-t70cmdmk8233na2gapvtncaitvhoua2d.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCtg7fQf87rQDG62OugxY__DGi65ZToCFA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>710015013776</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.modeck.education</string>
+	<key>PROJECT_ID</key>
+	<string>education-modeck</string>
+	<key>STORAGE_BUCKET</key>
+	<string>education-modeck.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:710015013776:ios:99cadc544702fd881a1915</string>
+	<key>DATABASE_URL</key>
+	<string>https://education-modeck.firebaseio.com</string>
+</dict>
+</plist>
