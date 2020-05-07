@@ -55,7 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     Firestore.instance.collection('test').document('testPlatform').setData({
-      'FromWeb':'ok'
+      'FromWeb':'ok',
+      'FromIos':'ok'
     });
   }
 
