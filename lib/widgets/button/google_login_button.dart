@@ -1,4 +1,5 @@
 
+import 'package:education/localization/localizations.dart';
 import 'package:education/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,7 @@ class GoogleLoginButton extends StatelessWidget {
           LoginWithGoogleButtonPressedE(),
         );
       },
-      label: Text('Sign in with Google', style: TextStyle(color: Colors.white)),
+      label: Text(AppLocalizations.of(context).singinwithgoogle , style: TextStyle(color: Colors.white)),
       color: Colors.redAccent,
     );
   }

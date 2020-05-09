@@ -35,12 +35,102 @@ class AppLocalizations {
       desc: 'get weather button',
     );
   }
+
   String get homescreen {
-    return Intl.message(
-      'HomeScreen',
-      name: 'homescreen',
-      desc: 'HomeScreen text'
-    );
+    return Intl.message('HomeScreen',
+        name: 'homescreen', desc: 'HomeScreen text');
+  }
+
+  String get singin {
+    return Intl.message('Sing In', name: 'singin');
+  }
+
+  String get passwordnotsame {
+    return Intl.message('Password not same', name: 'passwordnotsame');
+  }
+
+  String get invalidpassword {
+    return Intl.message('Invalid Password', name: 'invalidpassword');
+  }
+
+  String get invalidemail {
+    return Intl.message('Invalid Email', name: 'invalidemail');
+  }
+
+  String get registre {
+    return Intl.message('Registre', name: 'registre');
+  }
+
+  String get createanaccount {
+    return Intl.message('Create an account', name: 'createanaccount');
+  }
+
+  String get password {
+    return Intl.message('Password', name: 'password');
+  }
+
+  String get email {
+    return Intl.message('Email', name: 'email');
+  }
+
+  String get login {
+    return Intl.message('Login', name: 'login');
+  }
+
+  String get settingthedate {
+    return Intl.message('We setting ur data', name: 'settingthedate');
+  }
+
+  String get failure {
+    return Intl.message('Failure', name: 'failure');
+  }
+
+  String get loading {
+    return Intl.message('Loading', name: 'loading');
+  }
+
+  String get succes {
+    return Intl.message('Succes', name: 'succes');
+  }
+
+  String get invalidnick {
+    return Intl.message('Invalid Nick', name: 'invalidnick');
+  }
+
+  String get nick {
+    return Intl.message('Nick', name: 'nick');
+  }
+
+  String get invalidsurname {
+    return Intl.message('Invalid Surname', name: 'invalidsurname');
+  }
+
+  String get surname {
+    return Intl.message('Surname', name: 'surname');
+  }
+
+  String get name {
+    return Intl.message('Name', name: 'name');
+  }
+
+  String get invalidname {
+    return Intl.message('Invalid Name', name: 'invalidname');
+  }
+
+  String get urnameandnick {
+    return Intl.message('Your name and Nick', name: 'urnameandnick');
+  }
+  String get singup {
+  return Intl.message(
+  'Sing Up',
+  name: 'singup'
+  );
+  }
+  String get singinwithgoogle {
+  return Intl.message(
+  'Sing In with Google',
+  name: 'singinwithgoogle'
+  );
   }
 }
 
