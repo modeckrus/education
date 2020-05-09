@@ -32,6 +32,7 @@ dependencies:
   google_sign_in:
   flutter_bloc: 
   equatable:
+  firebase_messaging: ^6.0.13
   
   
 

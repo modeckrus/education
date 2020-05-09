@@ -1,4 +1,4 @@
-package com.example.education
+package com.modeck.education
 
 import io.flutter.embedding.android.FlutterActivity
 
