@@ -1,6 +1,10 @@
 //import 'dart:js';
 
+import 'dart:io';
+
 import 'package:education/authentication/bloc/authentication_bloc.dart';
+import 'package:education/messaging/messaging_service.dart';
+import 'package:education/messaging/web_messaging_service.dart';
 import 'package:education/screens/splash_screen.dart';
 import 'package:education/simple_bloc_delegate.dart';
 import 'package:education/user_repository.dart';
@@ -12,17 +16,28 @@ import 'home/home_screen.dart';
 import 'localization/localizations.dart';
 import 'login/login_screen.dart';
 import 'settinguser/setting_user_page.dart';
- 
+
+const ISWEB = true;
+const ISIOS = false;
+const ISAND = false;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   final UserRepository userRepository = UserRepository();
-  runApp(
-    BlocProvider(
-      create: (context) => AuthenticationBloc(userRepository: userRepository)..add(AppStarted()),
-      child: MyApp(userRepository: userRepository,),
-    )
-  );
+  
+  if (ISAND) {
+    MessageHandlerService service = MessageHandlerService();
+    service.init();
+  }
+
+  runApp(BlocProvider(
+    create: (context) =>
+        AuthenticationBloc(userRepository: userRepository)..add(AppStarted()),
+    child: MyApp(
+      userRepository: userRepository,
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -64,20 +79,32 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          if (state is Unauthenticated) {
-            return LoginScreen(userRepository: widget.userRepository);
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      builder: (context, state) {
+        if (state is Unauthenticated) {
+          return LoginScreen(userRepository: widget.userRepository);
+        }
+        if (state is Authenticated) {
+          if (ISIOS) {
+            MessageHandlerService service = MessageHandlerService();
+            service.init();
           }
-          if (state is Authenticated) {
-            return HomeScreen(user: state.user,);
-            //return HomeScreen(name: state.displayName, uid: state.uid,);
+          if(ISWEB){
+            initWebMessagingHandler();
           }
-          if(state is SettingUser){
-            return SettingUserPage(userRepository: widget.userRepository, authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),);
-          }
-          return SplashScreen();
-        },
-      );
+          return HomeScreen(
+            user: state.user,
+          );
+          //return HomeScreen(name: state.displayName, uid: state.uid,);
+        }
+        if (state is SettingUser) {
+          return SettingUserPage(
+            userRepository: widget.userRepository,
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+          );
+        }
+        return SplashScreen();
+      },
+    );
   }
 }

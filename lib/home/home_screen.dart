@@ -15,6 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      bottomSheet: Text(
+        'BottomSheet'
+      ),
       body: Center(
         child: Text(AppLocalizations.of(context).homescreen),
       ),
