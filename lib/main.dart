@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             service.init();
           }
           if(ISWEB){
-            initWebMessagingHandler();
+            // initWebMessagingHandler();
           }
           return HomeScreen(
             user: state.user,
