@@ -1,14 +1,20 @@
 import 'dart:convert';
+/*
 import 'dart:js' as js;
+*/
 void messageHandler(payload){
+  /*
   print('Payload: ' + payload);
   var not = PayloadNotification.fromJson(jsonDecode(payload));
   print(not.notification.title);
+  */
 }
 
 void initWebMessagingHandler(){
+  /*
   js.context['messagecallback'] = messageHandler;
   js.context.callMethod('messageInit');
+  */
 }
 
 

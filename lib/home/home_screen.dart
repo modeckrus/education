@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:education/localization/localizations.dart';
 import 'package:education/messaging/show_notification.dart';
+import 'package:education/screens/error_screen.dart';
+import 'package:education/screens/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../localization/localizations.dart';
+import '../localization/localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   final FirebaseUser user;
@@ -15,85 +21,67 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.fiber_new), title: Text('feed')),
-        BottomNavigationBarItem(icon: Icon(Icons.ac_unit), title: Text('user'))
-      ]),
-      body: Center(
-        child: SingleChildScrollView(
-            child: Column(
-          children: [
-            Text(AppLocalizations.of(context).homescreen),
-            Builder(builder: (context) {
-              return RaisedButton(
-                onPressed: () {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.black45,
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(),
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      content: Container(
-                        width: double.infinity,
-                        height: 25,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            CircleAvatar(
-                                child: Icon(
-                              Icons.add,
-                              size: 24,
-                            )),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  'Title',
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            RaisedButton(
-                              color: Colors.redAccent,
-                              onPressed: () {},
-                              child: Text(
-                                'press',
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                            )
-                          ],
-                        ),
-                      )));
-                  // Scaffold.of(context).showBottomSheet((context) => Container(
-                  //       height: 200,
-                  //       color: Colors.amber,
-                  //       child: Center(
-                  //         child: Column(
-                  //           mainAxisAlignment: MainAxisAlignment.center,
-                  //           mainAxisSize: MainAxisSize.min,
-                  //           children: <Widget>[
-                  //             const Text('BottomSheet'),
-                  //             RaisedButton(
-                  //               child: const Text('Close BottomSheet'),
-                  //               onPressed: () => Navigator.pop(context),
-                  //             )
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ));
-                },
-                child: Text('Hey'),
-              );
-            }),
-          ],
-        )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.pushNamed(context, '/mainformuls');
+        },
+        child: Icon(Icons.add),
       ),
+      body: StreamBuilder(
+          stream: Firestore.instance
+              .collection('routes')
+              .document(Localizations.localeOf(context).languageCode)
+              .collection('mainRoutes')
+              .snapshots(),
+          builder: (context, snap) {
+            if (!snap.hasData) {
+              return LoadingScreen();
+            }
+            if (snap.hasError) {
+              return ErrorScreen(error: snap.error.toString());
+            }
+            print({'Locale: ': Localizations.localeOf(context).languageCode});
+            // QuerySnapshot querySnap = snap.data;
+            // print(querySnap.documents);
+            //print(snap.data.documents['Title'].data['title']);
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  pinned: true,
+                  expandedHeight: 120,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(
+                      snap.data.documents[0].data['title'],
+                      textAlign: TextAlign.center,
+                    ),
+                    centerTitle: true,
+                  ),
+                ),
+                SliverList(delegate: SliverChildBuilderDelegate(
+                  (context, index){
+                    if(index == 0){
+                      return Container();
+                    }
+                    return ListTile(
+                      leading: Icon(Icons.error, size: 30,),
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                      title: Text(snap.data.documents[index].data['title'], textAlign: TextAlign.start, style: TextStyle(
+                        fontSize: 20,
+                      ),),
+                      onTap: (){
+                        String route = snap.data.documents[index].data['route'];
+                        DocumentSnapshot doc =  snap.data.documents[index];
+                        Navigator.pushNamed(context, route.toString(), arguments: doc.reference.path);
+                      },
+                    );
+                  },
+                  childCount: snap.data.documents.length,
+                ),
+                ),
+              ],
+            );
+          }),
     );
   }
 }

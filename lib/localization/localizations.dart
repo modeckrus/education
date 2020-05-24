@@ -120,17 +120,17 @@ class AppLocalizations {
   String get urnameandnick {
     return Intl.message('Your name and Nick', name: 'urnameandnick');
   }
+
   String get singup {
-  return Intl.message(
-  'Sing Up',
-  name: 'singup'
-  );
+    return Intl.message('Sing Up', name: 'singup');
   }
+
   String get singinwithgoogle {
-  return Intl.message(
-  'Sing In with Google',
-  name: 'singinwithgoogle'
-  );
+    return Intl.message('Sing In with Google', name: 'singinwithgoogle');
+  }
+
+  String get error {
+    return Intl.message('Error', name: 'error');
   }
 }
 

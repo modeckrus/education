@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:education/authentication/bloc/authentication_bloc.dart';
 import 'package:education/messaging/messaging_service.dart';
 import 'package:education/messaging/web_messaging_service.dart';
+import 'package:education/route_generator.dart';
 import 'package:education/screens/splash_screen.dart';
 import 'package:education/simple_bloc_delegate.dart';
 import 'package:education/user_repository.dart';
@@ -15,6 +16,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'home/home_screen.dart';
 import 'localization/localizations.dart';
 import 'login/login_screen.dart';
+import 'screens/main_formuls-screen.dart';
+import 'screens/theorems-screen.dart';
+import 'screens/theory-screen.dart';
+import 'screens/thermins-screen.dart';
+import 'screens/zadaniya-screen.dart';
 import 'settinguser/setting_user_page.dart';
 
 const ISWEB = true;
@@ -61,9 +67,10 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).title,
       theme: ThemeData.dark(),
-      home: MyHomePage(
-        userRepository: userRepository,
-      ),
+      initialRoute: '/',
+      onGenerateRoute: (settings){
+        return RouteGenerator.generateRoute(settings, userRepository);
+      },
     );
   }
 }
@@ -90,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
             service.init();
           }
           if(ISWEB){
-            // initWebMessagingHandler();
+            initWebMessagingHandler();
           }
           return HomeScreen(
             user: state.user,
