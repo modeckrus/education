@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:education/localization/localizations.dart';
-import 'package:education/messaging/show_notification.dart';
 import 'package:education/screens/error_screen.dart';
 import 'package:education/screens/loading_screen.dart';
+import 'package:education/widgets/my_sliverappbar.dart';
+import 'package:education/widgets/sliver_listtile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../localization/localizations.dart';
-import '../localization/localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   final FirebaseUser user;
@@ -21,12 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.pushNamed(context, '/mainformuls');
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: FloatingActionButton(onPressed: ()async {
+        String code = Localizations.localeOf(context).countryCode;
+        var doc = await Firestore.instance.collection('routes').document(code);
+        print(doc.path);
+      },
+      child: Icon(Icons.ac_unit),),
       body: StreamBuilder(
           stream: Firestore.instance
               .collection('routes')
@@ -40,44 +37,24 @@ class _HomeScreenState extends State<HomeScreen> {
             if (snap.hasError) {
               return ErrorScreen(error: snap.error.toString());
             }
-            print({'Locale: ': Localizations.localeOf(context).languageCode});
+            var countryCode =  Localizations.localeOf(context).languageCode;
+            print({'Locale: ': countryCode});
             // QuerySnapshot querySnap = snap.data;
             // print(querySnap.documents);
             //print(snap.data.documents['Title'].data['title']);
             return CustomScrollView(
               slivers: [
-                SliverAppBar(
-                  floating: true,
-                  pinned: true,
-                  expandedHeight: 120,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Text(
-                      snap.data.documents[0].data['title'],
-                      textAlign: TextAlign.center,
-                    ),
-                    centerTitle: true,
+                MySliverAppBar(
+                  path: '/routes/'+countryCode,
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final doc = snap.data.documents[index];
+                      return SliverListTile(doc: doc);
+                    },
+                    childCount: snap.data.documents.length,
                   ),
-                ),
-                SliverList(delegate: SliverChildBuilderDelegate(
-                  (context, index){
-                    if(index == 0){
-                      return Container();
-                    }
-                    return ListTile(
-                      leading: Icon(Icons.error, size: 30,),
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                      title: Text(snap.data.documents[index].data['title'], textAlign: TextAlign.start, style: TextStyle(
-                        fontSize: 20,
-                      ),),
-                      onTap: (){
-                        String route = snap.data.documents[index].data['route'];
-                        DocumentSnapshot doc =  snap.data.documents[index];
-                        Navigator.pushNamed(context, route.toString(), arguments: doc.reference.path);
-                      },
-                    );
-                  },
-                  childCount: snap.data.documents.length,
-                ),
                 ),
               ],
             );
@@ -85,3 +62,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
