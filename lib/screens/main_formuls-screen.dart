@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:education/widgets/my_sliverappbar.dart';
-import 'package:education/widgets/sliver_listtile.dart';
 import 'package:flutter/material.dart';
 
 import 'error_screen.dart';
@@ -18,13 +17,18 @@ class _MainFormulsScreenState extends State<MainFormulsScreen> {
   Widget build(BuildContext context) {
     final stream =
         widget.doc.reference.firestore.collection('list').snapshots();
-    
+
     return Scaffold(
       key: UniqueKey(),
       body: CustomScrollView(
         key: UniqueKey(),
         slivers: [
-          MySliverAppBar(path: widget.doc.reference.path),
+          SliverAppBar(
+            centerTitle: true,
+            pinned: true,
+            floating: true,
+            title: Text(widget.doc.data['title']),
+          ),
           // SliverList(
           //   delegate: SliverChildBuilderDelegate(
           //     (context, index){
@@ -36,32 +40,32 @@ class _MainFormulsScreenState extends State<MainFormulsScreen> {
           //     childCount: 10,
           //   ),
           // ),
-              StreamBuilder(
-                stream: Firestore.instance.collection(widget.doc.reference.path + '/list').snapshots(),
-                builder: (BuildContext context, AsyncSnapshot snapshot){
-                  if(!(snapshot.hasData)){
-                    return SliverToBoxAdapter(child: LoadingScreen());
-                  }
-                  if(snapshot.hasError){
-                    return SliverToBoxAdapter(child: ErrorScreen());
-                  }
-                  
-                  QuerySnapshot data = snapshot.data;
-                  return SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index){
-                        return Container(
-                          child: Text(
-                            data.documents[index].data['title']
-                          ),
-                        );
-                      },
-                      childCount: data.documents.length,
-                    ),
-                  );
-                },
-              ),
-          
+          StreamBuilder(
+            stream: Firestore.instance
+                .collection(widget.doc.reference.path + '/data')
+                .snapshots(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!(snapshot.hasData)) {
+                return SliverToBoxAdapter(child: LoadingScreen());
+              }
+              if (snapshot.hasError) {
+                return SliverToBoxAdapter(child: ErrorScreen());
+              }
+
+              QuerySnapshot data = snapshot.data;
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return Container(
+                      child: Text(data.documents[index].data['body']),
+                    );
+                  },
+                  childCount: data.documents.length,
+                ),
+              );
+            },
+          ),
+
           // StreamBuilder(
           //     stream:
           //         widget.doc.reference.firestore.collection('list').snapshots(),

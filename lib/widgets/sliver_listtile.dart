@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SliverListTile extends StatefulWidget {
   SliverListTile({Key key, @required this.doc}) : super(key: key);
-  DocumentSnapshot doc;
+  final DocumentSnapshot doc;
   @override
   _SliverListTileState createState() => _SliverListTileState();
 }

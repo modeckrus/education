@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:education/widgets/my_sliverappbar.dart';
+import 'package:education/searching/bloc/searching_bloc.dart';
 import 'package:education/widgets/sliver_listtile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'error_screen.dart';
 import 'loading_screen.dart';
@@ -14,18 +15,90 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  TextEditingController _searchController = TextEditingController();
+  bool isSearching = false;
+  SearchingBloc bloc;
+  @override
+  void initState() {
+    bloc = SearchingBloc();
+    _searchController.addListener(onSearchEditing);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  void onSearchEditing() async {
+    bloc.add(Search(_searchController.text,
+        lang: Localizations.localeOf(context).languageCode));
+  }
+
   @override
   Widget build(BuildContext context) {
-    final stream =
-        widget.doc.reference.firestore.collection('list').snapshots();
-
     return Scaffold(
-      key: UniqueKey(),
       body: CustomScrollView(
-        key: UniqueKey(),
         slivers: [
-          MySliverAppBar(path: widget.doc.reference.path),
-          StreamBuilder(
+          isSearching? SliverAppBar(
+            actions: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    isSearching = !isSearching;
+                  });
+                },
+                icon: Icon(Icons.close),
+              ),
+            ],
+            floating: true,
+            pinned: true,
+            expandedHeight: 120,
+            flexibleSpace: FlexibleSpaceBar(
+              title: TextFormField(
+                autofocus: true,
+                controller: _searchController,
+              ),
+              centerTitle: true,
+            ),
+          ):SliverAppBar(
+            floating: true,
+            pinned: true,
+            expandedHeight: 120,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  setState(() {
+                    isSearching = !isSearching;
+                  });
+                },
+              )
+            ],
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(
+                widget.doc.data['title'],
+                textAlign: TextAlign.center,
+              ),
+              centerTitle: true,
+            ),
+          ),
+          isSearching? BlocBuilder(
+            bloc: bloc,
+            builder: (context, state) {
+              if (state is SearchEnd) {
+                return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return SliverListTile(doc: state.docs[index]);
+                  },
+                  childCount: state.docs.length,
+                ));
+              }
+              return SliverToBoxAdapter(child: Container());
+            },
+          ):StreamBuilder(
             stream: Firestore.instance
                 .collection(widget.doc.reference.path + '/list')
                 .snapshots(),
@@ -50,29 +123,6 @@ class _ListScreenState extends State<ListScreen> {
               );
             },
           ),
-
-          // StreamBuilder(
-          //     stream:
-          //         widget.doc.reference.firestore.collection('list').snapshots(),
-          //     builder: (context, snap) {
-          //       if (!snap.hasData) {
-          //         return LoadingScreen();
-          //       }
-          //       if (snap.hasError) {
-          //         return ErrorScreen(error: snap.error.toString());
-          //       }
-          //       print(snap);
-          //       return SliverList(
-          //         delegate: SliverChildBuilderDelegate(
-          //           (context, index){
-          //             return SliverListTile(
-          //               doc: snap.data.documents[index],
-          //             );
-          //           },
-          //         childCount: snap.data.documents.length,
-          //         ),
-          //       );
-          //     })
         ],
       ),
     );
