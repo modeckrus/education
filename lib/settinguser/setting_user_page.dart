@@ -1,16 +1,13 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:education/authentication/bloc/authentication_bloc.dart';
-import 'package:education/settinguser/setting_user_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../authentication/bloc/authentication_bloc.dart';
+import '../localization/localizations.dart';
 import '../user_repository.dart';
 import '../validators.dart';
 import 'bloc/settinguser_bloc.dart';
+import 'setting_user_button.dart';
 
 class SettingUserPage extends StatefulWidget {
   final UserRepository userRepository;
@@ -37,7 +34,8 @@ class _SettingUserPageState extends State<SettingUserPage> {
   @override
   void initState() {
     loadUserData();
-    settinguserBloc = SettinguserBloc(widget.userRepository, widget.authenticationBloc);
+    settinguserBloc =
+        SettinguserBloc(widget.userRepository, widget.authenticationBloc);
     super.initState();
     _nameController.addListener(_onNameChanged);
     _surnameController.addListener(_onSurNameChanged);
@@ -46,7 +44,6 @@ class _SettingUserPageState extends State<SettingUserPage> {
     //   userRepository: userRepository,
     //   image: image,
     // );
-    
   }
 
   // AddAvatarWidget addAvatarWidget;
@@ -55,9 +52,11 @@ class _SettingUserPageState extends State<SettingUserPage> {
     _settinguserBloc.close();
     super.dispose();
   }
-  void loadUserData()async{
+
+  void loadUserData() async {
     final user = await userRepository.getUser();
-    final doc = await Firestore.instance.collection('user').document(user.uid).get();
+    final doc =
+        await Firestore.instance.collection('user').document(user.uid).get();
     _nameController.text = doc.data['Name'];
     _surnameController.text = doc.data['Surname'];
     _nickController.text = doc.data['Nick'];
@@ -124,7 +123,7 @@ class _SettingUserPageState extends State<SettingUserPage> {
                       height: 50,
                     ),
                     Text(
-                      'Your Name and Nick',
+                      AppLocalizations.of(context).urnameandnick,
                       style: TextStyle(
                         fontSize: 24,
                       ),
@@ -142,14 +141,16 @@ class _SettingUserPageState extends State<SettingUserPage> {
                           child: TextFormField(
                             controller: _nameController,
                             decoration: InputDecoration(
-                              labelText: 'Name',
+                              labelText: AppLocalizations.of(context).name,
                             ),
                             keyboardType: TextInputType.visiblePassword,
                             autovalidate: true,
                             autocorrect: false,
                             enabled: isEnabled,
                             validator: (_) {
-                              return !isNameValid ? 'NameInvalid' : null;
+                              return !isNameValid
+                                  ? AppLocalizations.of(context).invalidname
+                                  : null;
                             },
                           ),
                         ),
@@ -161,14 +162,16 @@ class _SettingUserPageState extends State<SettingUserPage> {
                           child: TextFormField(
                             controller: _surnameController,
                             decoration: InputDecoration(
-                              labelText: 'Surname',
+                              labelText: AppLocalizations.of(context).surname,
                             ),
                             keyboardType: TextInputType.visiblePassword,
                             autovalidate: true,
                             autocorrect: false,
                             enabled: isEnabled,
                             validator: (_) {
-                              return !isSurNameValid ? 'SurnameInvalid' : null;
+                              return !isSurNameValid
+                                  ? AppLocalizations.of(context).invalidsurname
+                                  : null;
                             },
                           ),
                         ),
@@ -180,14 +183,16 @@ class _SettingUserPageState extends State<SettingUserPage> {
                       child: TextFormField(
                         controller: _nickController,
                         decoration: InputDecoration(
-                          labelText: 'Nick',
+                          labelText: AppLocalizations.of(context).nick,
                         ),
                         keyboardType: TextInputType.visiblePassword,
                         autovalidate: true,
                         autocorrect: false,
                         enabled: isEnabled,
                         validator: (_) {
-                          return !isNickNameValid ? 'Nick Invalid' : null;
+                          return !isNickNameValid
+                              ? AppLocalizations.of(context).invalidnick
+                              : null;
                         },
                       ),
                     ),
@@ -210,7 +215,10 @@ class _SettingUserPageState extends State<SettingUserPage> {
           // _settinguserBloc.add(NextButtonPressedE(
           //     name: _name, surname: _surname, nick: _nick, avatar: _avatar));
           _settinguserBloc.add(NextButtonPressedE(
-               name: _name, surname: _surname, nick: _nick, avatar: 'test/avatar.jpeg'));
+              name: _name,
+              surname: _surname,
+              nick: _nick,
+              avatar: 'test/avatar.jpeg'));
           isEnabled = false;
           //_settinguserBloc.add(NextButtonPressedE(name: _name, surname: _surname, nick: _nick, avatar: _avatar));
         });

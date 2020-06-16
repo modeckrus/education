@@ -1,3 +1,4 @@
+import 'package:education/localization/localizations.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class LoginButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
       ),
       onPressed: _onPressed,
-      child: Text('Login'),
+      child: Text(AppLocalizations.of(context).login),
     );
   }
 }

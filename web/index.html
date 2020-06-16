@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -9,36 +10,61 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="testplatform">
-  <meta name="google-signin-client_id" content="710015013776-rj90gf04omaqg9h61sao0rfs9go6va99.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="710015013776-rj90gf04omaqg9h61sao0rfs9go6va99.apps.googleusercontent.com">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
 
   <title>testplatform</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCzUq2mq1xT71LDQcWZeQmV3XofVDHG8i4",
-    authDomain: "education-modeck.firebaseapp.com",
-    databaseURL: "https://education-modeck.firebaseio.com",
-    projectId: "education-modeck",
-    storageBucket: "education-modeck.appspot.com",
-    messagingSenderId: "710015013776",
-    appId: "1:710015013776:web:6df291f105452ff61a1915",
-    measurementId: "G-V0ENWMP6KW"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCzUq2mq1xT71LDQcWZeQmV3XofVDHG8i4",
+      authDomain: "education-modeck.firebaseapp.com",
+      databaseURL: "https://education-modeck.firebaseio.com",
+      projectId: "education-modeck",
+      storageBucket: "education-modeck.appspot.com",
+      messagingSenderId: "710015013776",
+      appId: "1:710015013776:web:6df291f105452ff61a1915",
+      measurementId: "G-V0ENWMP6KW"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    function messageInit() {
+      const messaging = firebase.messaging();
+      messaging.usePublicVapidKey('BI8477Xauy7pEzRpsVrs_kO0DCw6JU8L-F4qX4vTBh7s2b4aVpRRJT3dg0aN4qs5PvY-JSeUzy5F0W9EMnOzyNw');
+      messaging.requestPermission().then(
+        function () {
+          console.log('Have permisson');
+          return messaging.getToken();
+        }).then(function (token) {
+          console.log(token);
+        })
+        .catch(function (err) {
+          console.log('no permission', err);
+        });
+      messaging.onMessage((payload) => {
+        console.log('Try call callback');
+        messagecallback(JSON.stringify(payload));
+        console.log('Message received. ', payload);
+
+        // ...
+      });
+    }
+  </script>
+
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
@@ -48,4 +74,5 @@
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
+
 </html>

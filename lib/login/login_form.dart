@@ -1,3 +1,4 @@
+import 'package:education/localization/localizations.dart';
 import 'package:education/widgets/button/bloc/button_bloc.dart';
 import 'package:education/widgets/button/create_an_account_button.dart';
 import 'package:education/widgets/button/google_login_button.dart';
@@ -90,7 +91,7 @@ class _LoginFormState extends State<LoginForm> {
         if (state is LSuccesS) {
           return SafeArea(
             child: Center(
-              child: Text('Succes'),
+              child: Text(AppLocalizations.of(context).succes),
             ),
           );
         }
@@ -99,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Center(
               child: Column(
                 children: <Widget>[
-                  Text('Loading'),
+                  Text(AppLocalizations.of(context).loading),
                   CircularProgressIndicator(),
                 ],
               ),
@@ -109,7 +110,7 @@ class _LoginFormState extends State<LoginForm> {
         if (state is LFailureS) {
           return SafeArea(
             child: Center(
-              child: Text('Failure'),
+              child: Text(AppLocalizations.of(context).failure),
             ),
           );
         }
@@ -132,7 +133,7 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Text('Wait a minute, we setting ur data',style: TextStyle(fontSize: 24),)
+            Text(AppLocalizations.of(context).settingthedate,style: TextStyle(fontSize: 24),)
           ],
         ),
       ),
@@ -150,7 +151,7 @@ class _LoginFormState extends State<LoginForm> {
               height: 50,
             ),
             Text(
-              'Login',
+              AppLocalizations.of(context).login,
               style: TextStyle(fontSize: 24),
             ),
             SizedBox(
@@ -162,13 +163,13 @@ class _LoginFormState extends State<LoginForm> {
                       controller: _emailController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.email),
-                        labelText: 'Email',
+                        labelText: AppLocalizations.of(context).email,
                       ),
                       keyboardType: TextInputType.emailAddress,
                       autovalidate: true,
                       autocorrect: false,
                       validator: (_) {
-                        return !isEmailValid ? 'Invalid Email' : null;
+                        return !isEmailValid ? AppLocalizations.of(context).invalidemail : null;
                       },
                     ),
             ),
@@ -178,14 +179,14 @@ class _LoginFormState extends State<LoginForm> {
                       controller: _passwordController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.lock),
-                        labelText: 'Password',
+                        labelText: AppLocalizations.of(context).password,
                       ),
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.visiblePassword,
                       autovalidate: true,
                       obscureText: true,
                       autocorrect: false,
                       validator: (_) {
-                        return !isPasswordValid ? 'Invalid Password' : null;
+                        return !isPasswordValid ? AppLocalizations.of(context).invalidpassword : null;
                       },
                     ),
             ),
@@ -219,7 +220,7 @@ class _LoginFormState extends State<LoginForm> {
                 _buttonBloc.add(BStatusChanged(false));
                 _loginBloc.add(CreateAccountButtonPressedE());
               },
-              child: Text('Create an account'),
+              child: Text(AppLocalizations.of(context).createanaccount),
             )
           ],
         ),
@@ -238,7 +239,7 @@ class _LoginFormState extends State<LoginForm> {
               height: 50,
             ),
             Text(
-              'Registre',
+              AppLocalizations.of(context).registre,
               style: TextStyle(fontSize: 24),
             ),
             SizedBox(
@@ -256,7 +257,7 @@ class _LoginFormState extends State<LoginForm> {
                       autovalidate: true,
                       autocorrect: false,
                       validator: (_) {
-                        return !isEmailValid ? 'Invalid Email' : null;
+                        return !isEmailValid ? AppLocalizations.of(context).invalidemail : null;
                       },
                     ),
             ),
@@ -273,7 +274,7 @@ class _LoginFormState extends State<LoginForm> {
                       obscureText: true,
                       autocorrect: false,
                       validator: (_) {
-                        return !isPasswordValid ? 'Invalid Password' : null;
+                        return !isPasswordValid ? AppLocalizations.of(context).invalidpassword : null;
                       },
                     ),
             ),
@@ -290,7 +291,7 @@ class _LoginFormState extends State<LoginForm> {
                       obscureText: true,
                       autocorrect: false,
                       validator: (_) {
-                        return !isRePassValid ? 'Password not same' : null;
+                        return !isRePassValid ? AppLocalizations.of(context).passwordnotsame : null;
                       },
                     ),
             ),
@@ -317,7 +318,7 @@ class _LoginFormState extends State<LoginForm> {
                 _buttonBloc.add(BStatusChanged(false));
                 _loginBloc.add(SignInButtonPressedE());
               },
-              child: Text('Sing In'),
+              child: Text(AppLocalizations.of(context).singin),
             )
           ],
         ),

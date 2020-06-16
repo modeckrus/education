@@ -1,3 +1,4 @@
+import 'package:education/localization/localizations.dart';
 import 'package:flutter/material.dart';
 
 class CreateAnAccountButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class CreateAnAccountButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
       ),
       onPressed: _onPressed,
-      child: Text('Sing Up'),
+      child: Text(AppLocalizations.of(context).singup),
       color: Colors.redAccent,
     );
   }
