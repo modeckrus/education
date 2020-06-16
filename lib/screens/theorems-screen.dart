@@ -18,9 +18,8 @@ class _TheoremsScreenState extends State<TheoremsScreen> {
             pinned: true,
             expandedHeight: 120,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                'Теоремы и аксиомы',
-                textAlign: TextAlign.center,
+              title: TextField(
+                
               ),
               centerTitle: true,
             ),

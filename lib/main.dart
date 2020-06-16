@@ -16,11 +16,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'home/home_screen.dart';
 import 'localization/localizations.dart';
 import 'login/login_screen.dart';
-import 'screens/main_formuls-screen.dart';
-import 'screens/theorems-screen.dart';
-import 'screens/theory-screen.dart';
-import 'screens/thermins-screen.dart';
-import 'screens/zadaniya-screen.dart';
 import 'settinguser/setting_user_page.dart';
 
 const ISWEB = true;

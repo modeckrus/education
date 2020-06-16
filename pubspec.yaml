@@ -33,6 +33,7 @@ dependencies:
   flutter_bloc: 
   equatable:
   firebase_messaging: ^6.0.13
+  mathjax_view: ^0.1.2
   # js: ^0.6.0
   
   
