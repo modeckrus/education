@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "710015013776",
+    "firebase_url": "https://education-modeck.firebaseio.com",
+    "project_id": "education-modeck",
+    "storage_bucket": "education-modeck.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710015013776:android:6591f57f68cb9e451a1915",
+        "android_client_info": {
+          "package_name": "com.modeck.education"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710015013776-t70cmdmk8233na2gapvtncaitvhoua2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.modeck.education",
+            "certificate_hash": "ea8b1db2f63a594e6ffbee0f9b384ebea455508e"
+          }
+        },
+        {
+          "client_id": "710015013776-rj90gf04omaqg9h61sao0rfs9go6va99.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq3t89dA9D19NxINpONcxKGkOYw0CB224"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710015013776-rj90gf04omaqg9h61sao0rfs9go6va99.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "710015013776-c2p6ne6jfan0o3ukb87uctubm0sn4odu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.modeck.education"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

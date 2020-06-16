@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:bloc/bloc.dart';
 import '../../user_repository.dart';
 
 part 'authentication_event.dart';
@@ -38,9 +38,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         final user = await userRepository.getUser();
         yield Authenticated(user);
       } else {
-        yield Unauthenticated();
+        final user = await userRepository.anonAuth();
+        yield Authenticated(user);
+        //yield Unauthenticated();
       }
-    } catch (_) {
+    } catch (e) {
+      print('error while auth: ' + e.toString());
       yield Unauthenticated();
     }
   }
