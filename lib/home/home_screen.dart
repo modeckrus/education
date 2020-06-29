@@ -19,9 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: ()async {
-        String code = Localizations.localeOf(context).countryCode;
-        var doc = await Firestore.instance.collection('routes').document(code);
-        print(doc.path);
+        // String code = Localizations.localeOf(context).countryCode;
+        // var doc = await Firestore.instance.collection('routes').document(code);
+        // print(doc.path);
+        FirebaseAuth.instance.signOut();
       },
       child: Icon(Icons.ac_unit),),
       body: StreamBuilder(

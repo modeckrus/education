@@ -57,7 +57,7 @@ class _MainFormulsScreenState extends State<MainFormulsScreen> {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     return Container(
-                      child: Text(data.documents[index].data['body']),
+                      child:Container()
                     );
                   },
                   childCount: data.documents.length,

@@ -56,4 +56,8 @@ class UserRepository {
   Future<FirebaseUser> getUser() async {
     return (await _firebaseAuth.currentUser());
   }
+  Future<FirebaseUser> anonAuth() async{
+    final result = await _firebaseAuth.signInAnonymously();
+    return result.user;
+  }
 }
