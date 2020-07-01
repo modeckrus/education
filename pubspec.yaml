@@ -34,21 +34,8 @@ dependencies:
   flutter_bloc: ^4.0.1
   equatable: ^1.2.0
   firebase_messaging: ^6.0.13
-<<<<<<< HEAD
   flutter_svg: ^0.18.0
 
-=======
-  image_picker: ^0.6.7+2
-  flare_flutter: ^2.0.4
-  zefyr: ^0.11.0
-  file_picker: ^1.12.0
-  #for web
-  file_picker_web: ^1.0.0
-  # zefyr:
-  #   git:
-  #     url: https://github.com/memspace/zefyr.git
-  #     path: packages/zefy
->>>>>>> 96f35a1204c38ccd4e8318227be7899db142504e
   # js: ^0.6.0
   
   
