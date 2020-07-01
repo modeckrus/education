@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:education/localization/localizations.dart';
 import 'package:education/widgets/my_sliverappbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'error_screen.dart';
 import 'loading_screen.dart';
@@ -43,6 +45,7 @@ class _MainFormulsScreenState extends State<MainFormulsScreen> {
           StreamBuilder(
             stream: Firestore.instance
                 .collection(widget.doc.reference.path + '/data')
+                .orderBy('order')
                 .snapshots(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (!(snapshot.hasData)) {
@@ -56,9 +59,46 @@ class _MainFormulsScreenState extends State<MainFormulsScreen> {
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return Container(
-                      child:Container()
-                    );
+                    final d = data.documents[index].data;
+                    switch (d['type']) {
+                      case 'simpleText':
+                        return Container(
+                          child: Text(d['body'], style: TextStyle(
+                            fontSize: 20,
+                          ),),
+                        );
+                        break;
+                      case 'networkSvg':
+                      print('network svg');
+                        return FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: SvgPicture.network(
+                            d['url'],
+                            placeholderBuilder: (context) {
+                              return Container(
+                                height: 20,
+                                width: 200,
+                              );
+                            },
+                            color: Colors.white,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        );
+                      case 'richText':
+                        return RichText(text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          children: [
+                            TextSpan(text: 'It\'s '),
+                            TextSpan(text: 'Show youtself', style: TextStyle(
+                              decoration: TextDecoration.underline
+                            )),
+                            TextSpan(text: ' jopa '),
+                          ]
+                        ));
+                      default:
+                    }
                   },
                   childCount: data.documents.length,
                 ),

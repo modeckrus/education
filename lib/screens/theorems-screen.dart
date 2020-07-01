@@ -10,21 +10,11 @@ class TheoremsScreen extends StatefulWidget {
 class _TheoremsScreenState extends State<TheoremsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            expandedHeight: 120,
-            flexibleSpace: FlexibleSpaceBar(
-              title: TextField(
-                
-              ),
-              centerTitle: true,
-            ),
-          ),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body:TextField(
+          toolbarOptions: ToolbarOptions(),
+        )
       ),
     );
   }
