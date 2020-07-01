@@ -15,8 +15,8 @@ import 'localization/localizations.dart';
 import 'login/login_screen.dart';
 import 'settinguser/setting_user_page.dart';
 
-const ISWEB = true;
-const ISIOS = false;
+const ISWEB = false;
+const ISIOS = true;
 const ISAND = false;
 
 void main() {
