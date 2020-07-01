@@ -29,11 +29,18 @@ dependencies:
   firebase_core: ^0.4.5
   firebase_auth: ^0.16.1
   cloud_firestore: ^0.13.6
+  firebase_storage: ^3.1.6
   google_sign_in: ^4.5.1
   flutter_bloc: ^4.0.1
   equatable: ^1.2.0
   firebase_messaging: ^6.0.13
-  mathjax_view: ^0.1.2
+  image_picker: ^0.6.7+2
+  flare_flutter: ^2.0.4
+  zefyr: ^0.11.0
+  # zefyr:
+  #   git:
+  #     url: https://github.com/memspace/zefyr.git
+  #     path: packages/zefy
   # js: ^0.6.0
   
   

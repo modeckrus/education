@@ -118,7 +118,7 @@ class _LoginFormState extends State<LoginForm> {
           return LoginInital();
         }
         if (state is LSingUpInitialS) {
-          return SingUpInitial();
+          return singUpInitial();
         }
         if (state is LSettingS){
           return settingPage();
@@ -228,7 +228,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget SingUpInitial() {
+  Widget singUpInitial() {
     return SafeArea(
       child: Center(
         child: Column(
