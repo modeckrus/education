@@ -1,5 +1,3 @@
-import 'package:education/fstorage/picker.dart';
-import 'package:education/fstorage/uploader.dart';
 import 'package:flutter/material.dart';
 
 class TherminsScreen extends StatefulWidget {
@@ -28,7 +26,7 @@ class _TherminsScreenState extends State<TherminsScreen> {
             ),
           ),
           SliverToBoxAdapter(
-            child: Picker(),
+            child: Container(),
           )
         ],
       ),
