@@ -1,4 +1,3 @@
-
 import 'package:education/authentication/bloc/authentication_bloc.dart';
 import 'package:education/messaging/messaging_service.dart';
 import 'package:education/messaging/web_messaging_service.dart';
@@ -15,15 +14,15 @@ import 'localization/localizations.dart';
 import 'login/login_screen.dart';
 import 'settinguser/setting_user_page.dart';
 
-const ISWEB = false;
-const ISIOS = true;
+const ISWEB = true;
+const ISIOS = false;
 const ISAND = false;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   final UserRepository userRepository = UserRepository();
-  
+
   if (ISAND) {
     MessageHandlerService service = MessageHandlerService();
     service.init();
@@ -60,7 +59,7 @@ class MyApp extends StatelessWidget {
           AppLocalizations.of(context).title,
       theme: ThemeData.dark(),
       initialRoute: '/',
-      onGenerateRoute: (settings){
+      onGenerateRoute: (settings) {
         return RouteGenerator.generateRoute(settings, userRepository);
       },
     );
@@ -88,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
             MessageHandlerService service = MessageHandlerService();
             service.init();
           }
-          if(ISWEB){
+          if (ISWEB) {
             initWebMessagingHandler();
           }
           return HomeScreen(
