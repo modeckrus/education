@@ -1,3 +1,4 @@
+pubspec.lock
 # Miscellaneous
 *.class
 *.log
@@ -47,4 +48,5 @@ app.*.map.json
 
 
 pubspec.lock
+
 pubspec.lock
