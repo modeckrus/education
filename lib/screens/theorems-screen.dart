@@ -1,4 +1,5 @@
 import 'package:education/zefyr/editor-page.dart';
+import 'package:education/zefyr/reading-page.dart';
 import 'package:flutter/material.dart';
 
 class TheoremsScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _TheoremsScreenState extends State<TheoremsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: EditorPage(),
+        body: ReadingPage(),
       ),
     );
   }
