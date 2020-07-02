@@ -38,6 +38,10 @@ dependencies:
 
   image_picker: ^0.6.7+2
   flare_flutter: ^2.0.4
+  zefyr:
+    git:
+      url: https://github.com/memspace/zefyr.git
+      path: packages/zefyr
   # zefyr:
   #   git:
   #     url: https://github.com/memspace/zefyr.git
