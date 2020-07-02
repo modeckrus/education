@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:zefyr/zefyr.dart';
@@ -9,6 +10,9 @@ import 'image-delegator.dart';
 import 'mtoolbar.dart';
 
 class EditorPage extends StatefulWidget {
+  final String path;
+
+  const EditorPage({Key key, @required this.path}) : super(key: key);
   @override
   EditorPageState createState() => EditorPageState();
 }
@@ -39,11 +43,12 @@ class EditorPageState extends State<EditorPage> {
         title: Text("Editor page"),
         actions: [
           FlatButton.icon(
-              onPressed: () {
-                _saveDocument(context);
+              onPressed: () async {
+                await _saveDocument(context);
+                Navigator.pop(context);
               },
               icon: Icon(Icons.save),
-              label: Text('Lable'))
+              label: Text('Save'))
         ],
       ),
       body: Builder(
@@ -71,15 +76,20 @@ class EditorPageState extends State<EditorPage> {
     return NotusDocument.fromDelta(delta);
   }
 
-  void _saveDocument(BuildContext context) {
+  Future<void> _saveDocument(BuildContext context) async {
     // Notus documents can be easily serialized to JSON by passing to
     // `jsonEncode` directly
     final contents = jsonEncode(_controller.document);
     // For this example we save our document to a temporary file.
     // And show a snack bar on success.
     print(contents);
-    final file = File(Directory.systemTemp.path + "/quick_start.json");
+    final file = File(Directory.systemTemp.path + widget.path);
     // And show a snack bar on success.
     file.writeAsString(contents);
+    await FirebaseStorage.instance
+        .ref()
+        .child(widget.path)
+        .putFile(file)
+        .onComplete;
   }
 }

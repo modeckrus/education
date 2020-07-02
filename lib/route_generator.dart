@@ -10,36 +10,43 @@ import 'screens/theory-screen.dart';
 import 'screens/thermins-screen.dart';
 import 'screens/zadaniya-screen.dart';
 
-class RouteGenerator{
-
-  static Route<dynamic> generateRoute(RouteSettings settings, UserRepository userRepository){
+class RouteGenerator {
+  static Route<dynamic> generateRoute(
+      RouteSettings settings, UserRepository userRepository) {
     final args = settings.arguments;
-    
+
     switch (settings.name) {
-      case '/': 
-        return MaterialPageRoute(builder: (_) => MyHomePage(userRepository: userRepository,),);
+      case '/':
+        return MaterialPageRoute(
+          builder: (_) => MyHomePage(
+            userRepository: userRepository,
+          ),
+        );
         break;
-      case '/mainformuls': 
-        return MaterialPageRoute(builder: (_) => MainFormulsScreen(doc: args,));
+      case '/mainformuls':
+        return MaterialPageRoute(
+            builder: (_) => MainFormulsScreen(
+                  doc: args,
+                ));
         break;
-      case '/theoremsScreen': 
+      case '/theoremsScreen':
         return MaterialPageRoute(builder: (_) => TheoremsScreen());
         break;
-      case '/theoryScreen': 
+      case '/theoryScreen':
         return MaterialPageRoute(builder: (_) => TheorySceen());
         break;
-      case '/therminsScreen': 
+      case '/therminsScreen':
         return MaterialPageRoute(builder: (_) => TherminsScreen());
         break;
-      case '/zadaniyaScreen': 
+      case '/zadaniyaScreen':
         return MaterialPageRoute(builder: (_) => ZadaniyaScreen());
         break;
       case '/list':
         return MaterialPageRoute(builder: (_) => ListScreen(doc: args));
         break;
       default:
-      return MaterialPageRoute(builder: (_) => ErrorScreen());
-      break;
+        return MaterialPageRoute(builder: (_) => ErrorScreen());
+        break;
     }
   }
 }

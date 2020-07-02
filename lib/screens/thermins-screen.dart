@@ -1,3 +1,5 @@
+import 'package:education/zefyr/editor-page.dart';
+import 'package:education/zefyr/reading-page.dart';
 import 'package:flutter/material.dart';
 
 class TherminsScreen extends StatefulWidget {
@@ -11,24 +13,9 @@ class _TherminsScreenState extends State<TherminsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            expandedHeight: 120,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                'Термины и аксиомы',
-                textAlign: TextAlign.center,
-              ),
-              centerTitle: true,
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(),
-          )
-        ],
+      appBar: AppBar(),
+      body: ReadingPage(
+        path: 'test.json',
       ),
     );
   }

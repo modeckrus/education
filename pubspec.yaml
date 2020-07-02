@@ -35,7 +35,7 @@ dependencies:
   equatable: ^1.2.0
   firebase_messaging: ^6.0.13
   flutter_svg: ^0.18.0
-
+  flutter_cache_manager: ^1.4.1
   image_picker: ^0.6.7+2
   flare_flutter: ^2.0.4
   zefyr:

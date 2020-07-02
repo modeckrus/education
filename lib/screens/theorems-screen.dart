@@ -14,7 +14,8 @@ class _TheoremsScreenState extends State<TheoremsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: ReadingPage(),
+        appBar: AppBar(),
+        body: EditorPage(path: 'test.json'),
       ),
     );
   }

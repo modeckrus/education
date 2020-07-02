@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:zefyr/zefyr.dart';
 import 'package:quill_delta/quill_delta.dart';
@@ -8,7 +9,8 @@ import 'package:quill_delta/quill_delta.dart';
 import 'image-delegator.dart';
 
 class ReadingPage extends StatefulWidget {
-  ReadingPage({Key key}) : super(key: key);
+  final String path;
+  ReadingPage({Key key, @required this.path}) : super(key: key);
 
   @override
   _ReadingPageState createState() => _ReadingPageState();
@@ -16,12 +18,17 @@ class ReadingPage extends StatefulWidget {
 
 class _ReadingPageState extends State<ReadingPage> {
   Future<NotusDocument> _loadDocument() async {
-    final file = File(Directory.systemTemp.path + "/quick_start.json");
-    if (await file.exists()) {
-      final contents = await file.readAsString();
-      return NotusDocument.fromJson(jsonDecode(contents));
-    }
-    final Delta delta = Delta()..insert("Zefyr Quick Start\n");
+    final Delta delta = Delta()..insert("Something go wrong\n");
+    // final file = await FirebaseCacheManager().getSingleFile(widget.path);
+
+    // if (await file.exists()) {
+    //   final String contents = await file.readAsString();
+    //   if (contents == null || contents == '') {
+    //     return NotusDocument.fromDelta(delta);
+    //   }
+    //   return NotusDocument.fromJson(jsonDecode(contents));
+    // }
+
     return NotusDocument.fromDelta(delta);
   }
 
