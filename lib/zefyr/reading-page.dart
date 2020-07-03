@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:education/service/fstorage-cache-manager.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:zefyr/zefyr.dart';
@@ -19,15 +20,15 @@ class ReadingPage extends StatefulWidget {
 class _ReadingPageState extends State<ReadingPage> {
   Future<NotusDocument> _loadDocument() async {
     final Delta delta = Delta()..insert("Something go wrong\n");
-    // final file = await FirebaseCacheManager().getSingleFile(widget.path);
+    final file = await FStoreCacheManager().getFStoreFile(widget.path);
 
-    // if (await file.exists()) {
-    //   final String contents = await file.readAsString();
-    //   if (contents == null || contents == '') {
-    //     return NotusDocument.fromDelta(delta);
-    //   }
-    //   return NotusDocument.fromJson(jsonDecode(contents));
-    // }
+    if (await file.exists()) {
+      final String contents = await file.readAsString();
+      if (contents == null || contents == '') {
+        return NotusDocument.fromDelta(delta);
+      }
+      return NotusDocument.fromJson(jsonDecode(contents));
+    }
 
     return NotusDocument.fromDelta(delta);
   }
@@ -37,6 +38,16 @@ class _ReadingPageState extends State<ReadingPage> {
     //final initDoc = NotusDocument.fromJson(jsonDecode('[{"insert":"Loading"},{"insert":"\n","attributes":{"heading":1}}]'));
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.clear_all),
+              onPressed: () {
+                FStoreCacheManager().emptyCache();
+              },
+            )
+          ],
+        ),
         body: ZefyrScaffold(
           child: Center(
             child: FutureBuilder<NotusDocument>(

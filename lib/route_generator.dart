@@ -39,7 +39,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => TherminsScreen());
         break;
       case '/zadaniyaScreen':
-        return MaterialPageRoute(builder: (_) => ZadaniyaScreen());
+        return MaterialPageRoute(
+            builder: (_) => AddStateScreen(
+                  doc: args,
+                ));
         break;
       case '/list':
         return MaterialPageRoute(builder: (_) => ListScreen(doc: args));
