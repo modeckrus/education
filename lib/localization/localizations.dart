@@ -154,6 +154,14 @@ class AppLocalizations {
   String get addTags {
     return Intl.message('add Tags', name: 'addTags');
   }
+
+  String get home {
+    return Intl.message('Home', name: 'home');
+  }
+
+  String get more {
+    return Intl.message('More', name: 'more');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
