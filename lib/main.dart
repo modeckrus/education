@@ -3,7 +3,6 @@ import 'package:education/messaging/messaging_service.dart';
 import 'package:education/messaging/web_messaging_service.dart';
 import 'package:education/route_generator.dart';
 import 'package:education/screens/splash_screen.dart';
-import 'package:education/service/lang-codes.dart';
 import 'package:education/simple_bloc_delegate.dart';
 import 'package:education/user_repository.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +50,11 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: LangCodes.locales,
+      supportedLocales: [
+        Locale('en', ""),
+        Locale("ru", ""),
+        Locale('fr', ''),
+      ],
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).title,
       theme: ThemeData.dark(),
