@@ -15,7 +15,7 @@ class _TheoremsScreenState extends State<TheoremsScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
-        body: EditorPage(path: 'test.json'),
+        body: Container(),
       ),
     );
   }

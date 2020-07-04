@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
@@ -10,9 +11,9 @@ import 'image-delegator.dart';
 import 'mtoolbar.dart';
 
 class EditorPage extends StatefulWidget {
-  final String path;
+  final DocumentSnapshot doc;
 
-  const EditorPage({Key key, @required this.path}) : super(key: key);
+  const EditorPage({Key key, @required this.doc}) : super(key: key);
   @override
   EditorPageState createState() => EditorPageState();
 }
@@ -83,13 +84,10 @@ class EditorPageState extends State<EditorPage> {
     // For this example we save our document to a temporary file.
     // And show a snack bar on success.
     print(contents);
-    final file = File(Directory.systemTemp.path + widget.path);
+    final path = widget.doc.data['path'];
+    final file = File(Directory.systemTemp.path + path);
     // And show a snack bar on success.
     file.writeAsString(contents);
-    await FirebaseStorage.instance
-        .ref()
-        .child(widget.path)
-        .putFile(file)
-        .onComplete;
+    await FirebaseStorage.instance.ref().child(path).putFile(file).onComplete;
   }
 }
