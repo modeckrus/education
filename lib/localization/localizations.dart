@@ -162,6 +162,12 @@ class AppLocalizations {
   String get more {
     return Intl.message('More', name: 'more');
   }
+
+  String get selectTextNav {
+    return Intl.message(
+        'You are in selectable mod, to disable it, push button on top',
+        name: 'selectTextNav');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

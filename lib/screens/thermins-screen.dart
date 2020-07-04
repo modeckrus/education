@@ -12,8 +12,6 @@ class TherminsScreen extends StatefulWidget {
 class _TherminsScreenState extends State<TherminsScreen> {
   @override
   Widget build(BuildContext context) {
-    return ReadingPage(
-      path: 'test.json',
-    );
+    return Container();
   }
 }

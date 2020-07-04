@@ -12,11 +12,18 @@ class ErrorScreen extends StatefulWidget {
 class _ErrorScreenState extends State<ErrorScreen> {
   @override
   Widget build(BuildContext context) {
-    if(widget.error == '' || widget.error == null){
+    if (widget.error == '' || widget.error == null) {
       widget.error = AppLocalizations.of(context).error;
     }
-    return Center(
-      child: Text(widget.error),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Error'),
+        ),
+        body: Center(
+          child: Text(widget.error),
+        ),
+      ),
     );
   }
 }
