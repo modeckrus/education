@@ -132,6 +132,36 @@ class AppLocalizations {
   String get error {
     return Intl.message('Error', name: 'error');
   }
+
+  String get titleAddState {
+    return Intl.message('Add State', name: 'titleAddState');
+  }
+
+  String get topTextforaddState {
+    return Intl.message(
+        'Here you can add your state or create a new group for it',
+        name: 'topTextforaddState');
+  }
+
+  String get langof {
+    return Intl.message('Choose the lang  ', name: 'langof');
+  }
+
+  String get justTitle {
+    return Intl.message('Title', name: 'justTitle');
+  }
+
+  String get addTags {
+    return Intl.message('add Tags', name: 'addTags');
+  }
+
+  String get home {
+    return Intl.message('Home', name: 'home');
+  }
+
+  String get more {
+    return Intl.message('More', name: 'more');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

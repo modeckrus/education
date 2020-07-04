@@ -41,88 +41,99 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          isSearching? SliverAppBar(
-            actions: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    isSearching = !isSearching;
-                  });
-                },
-                icon: Icon(Icons.close),
-              ),
-            ],
-            floating: true,
-            pinned: true,
-            expandedHeight: 120,
-            flexibleSpace: FlexibleSpaceBar(
-              title: TextFormField(
-                autofocus: true,
-                controller: _searchController,
-              ),
-              centerTitle: true,
-            ),
-          ):SliverAppBar(
-            floating: true,
-            pinned: true,
-            expandedHeight: 120,
-            actions: [
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: (){
-                  setState(() {
-                    isSearching = !isSearching;
-                  });
-                },
-              )
-            ],
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                widget.doc.data['title'],
-                textAlign: TextAlign.center,
-              ),
-              centerTitle: true,
-            ),
-          ),
-          isSearching? BlocBuilder(
-            bloc: bloc,
-            builder: (context, state) {
-              if (state is SearchEnd) {
-                return SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return SliverListTile(doc: state.docs[index]);
+          isSearching
+              ? SliverAppBar(
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isSearching = !isSearching;
+                        });
+                      },
+                      icon: Icon(Icons.close),
+                    ),
+                  ],
+                  floating: true,
+                  pinned: true,
+                  expandedHeight: 120,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: TextFormField(
+                      autofocus: true,
+                      controller: _searchController,
+                    ),
+                    centerTitle: true,
+                  ),
+                )
+              : SliverAppBar(
+                  floating: true,
+                  pinned: true,
+                  expandedHeight: 120,
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.add_circle_outline),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/addstate',
+                            arguments: widget.doc);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {
+                          isSearching = !isSearching;
+                        });
+                      },
+                    ),
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(
+                      widget.doc.data['title'],
+                      textAlign: TextAlign.center,
+                    ),
+                    centerTitle: true,
+                  ),
+                ),
+          isSearching
+              ? BlocBuilder(
+                  bloc: bloc,
+                  builder: (context, state) {
+                    if (state is SearchEnd) {
+                      return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return SliverListTile(doc: state.docs[index]);
+                        },
+                        childCount: state.docs.length,
+                      ));
+                    }
+                    return SliverToBoxAdapter(child: Container());
                   },
-                  childCount: state.docs.length,
-                ));
-              }
-              return SliverToBoxAdapter(child: Container());
-            },
-          ):StreamBuilder(
-            stream: Firestore.instance
-                .collection(widget.doc.reference.path + '/list')
-                .snapshots(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (!(snapshot.hasData)) {
-                return SliverToBoxAdapter(child: LoadingScreen());
-              }
-              if (snapshot.hasError) {
-                return SliverToBoxAdapter(child: ErrorScreen());
-              }
+                )
+              : StreamBuilder(
+                  stream: Firestore.instance
+                      .collection(widget.doc.reference.path + '/list')
+                      .snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (!(snapshot.hasData)) {
+                      return SliverToBoxAdapter(child: LoadingScreen());
+                    }
+                    if (snapshot.hasError) {
+                      return SliverToBoxAdapter(child: ErrorScreen());
+                    }
 
-              QuerySnapshot data = snapshot.data;
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return SliverListTile(
-                      doc: data.documents[index],
+                    QuerySnapshot data = snapshot.data;
+                    return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return SliverListTile(
+                            doc: data.documents[index],
+                          );
+                        },
+                        childCount: data.documents.length,
+                      ),
                     );
                   },
-                  childCount: data.documents.length,
                 ),
-              );
-            },
-          ),
         ],
       ),
     );
