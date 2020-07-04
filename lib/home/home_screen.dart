@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (snap.hasError) {
               return ErrorScreen(error: snap.error.toString());
             }
+
             var countryCode = Localizations.localeOf(context).languageCode;
             print({'Locale: ': countryCode});
             // QuerySnapshot querySnap = snap.data;
