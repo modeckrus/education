@@ -101,31 +101,37 @@ class _MzefyrEditorState extends State<MzefyrEditor> {
   bool isSelectable = false;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onLongPress: () {
-        Scaffold.of(context).showBottomSheet((context) => Container(
-              padding: EdgeInsets.all(20),
-              height: 200,
-              child: Text(
-                AppLocalizations.of(context).selectTextNav,
-                style: TextStyle(fontSize: 24),
-              ),
-            ));
-        setState(() {
-          isSelectable = !isSelectable;
-        });
-      },
-      child: isSelectable
-          ? ZefyrEditor(
-              controller: _controller,
-              focusNode: _focusNode,
-              mode: ZefyrMode.select,
-              imageDelegate: const MyAppZefyrImageDelegate(),
-            )
-          : ZefyrView(
-              document: widget.doc,
-              imageDelegate: const MyAppZefyrImageDelegate(),
-            ),
+    // return GestureDetector(
+    //   onLongPress: () {
+    //     Scaffold.of(context).showBottomSheet((context) => Container(
+    //           padding: EdgeInsets.all(20),
+    //           height: 200,
+    //           child: Text(
+    //             AppLocalizations.of(context).selectTextNav,
+    //             style: TextStyle(fontSize: 24),
+    //           ),
+    //         ));
+    //     setState(() {
+    //       isSelectable = !isSelectable;
+    //     });
+    //   },
+    //   child: isSelectable
+    //       ? ZefyrEditor(
+    //           controller: _controller,
+    //           focusNode: _focusNode,
+    //           mode: ZefyrMode.select,
+    //           imageDelegate: const MyAppZefyrImageDelegate(),
+    //         )
+    //       : ZefyrView(
+    //           document: widget.doc,
+    //           imageDelegate: const MyAppZefyrImageDelegate(),
+    //         ),
+    // );
+    return ZefyrEditor(
+      controller: _controller,
+      focusNode: _focusNode,
+      mode: ZefyrMode.select,
+      imageDelegate: const MyAppZefyrImageDelegate(),
     );
   }
 }

@@ -12,7 +12,6 @@ import 'mtoolbar.dart';
 
 class EditorPage extends StatefulWidget {
   final DocumentSnapshot doc;
-
   const EditorPage({Key key, @required this.doc}) : super(key: key);
   @override
   EditorPageState createState() => EditorPageState();

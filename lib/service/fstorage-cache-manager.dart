@@ -33,7 +33,8 @@ class FStoreCacheManager extends BaseCacheManager {
       final data = await FirebaseStorage.instance
           .ref()
           .child(childpath)
-          .getData(20 * 1024);
+          .getData(50 * 1024 * 1024);
+
       final file = await putFile(childpath, data);
       return file;
     }
