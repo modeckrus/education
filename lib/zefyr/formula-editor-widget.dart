@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:education/localization/localizations.dart';
 import 'package:education/models/addFormula.dart';
+import 'package:education/widgets/bloc/title_bloc.dart';
 import 'package:education/widgets/tags-editor.dart';
 import 'package:education/widgets/title-editor-widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uuid/uuid.dart';
@@ -133,130 +135,145 @@ class _FormulaEditorWidgetState extends State<FormulaEditorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final uuid = Uuid().v4();
-          final path = 'formulas/' + uuid + '.svg';
-          var stags = List<String>();
-          final title = _titleController.text;
-          stags.addAll(tags);
-          for (var i = 1; i < 5; i++) {
-            stags.add(title.substring(0, i));
-          }
-          stags.add(title);
-          final formula = Formula(
-              path: path,
-              uid: GetIt.I.get<FirebaseUser>().uid,
-              tex: _controller.text,
-              tags: stags,
-              title: title);
-          print(formula);
-          print('Start uploading');
-          final task = FirebaseStorage.instance
-              .ref()
-              .child(path)
-              .putData(utf8.encode(svg));
-          await task.onComplete;
-          print('Uploaded');
-          await Firestore.instance.collection('formulas').add(formula.toJson());
-          print('added to firebase');
-        },
-        child: Icon(Icons.navigate_next),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  height: 200,
-                  child: svg != null
-                      ? SvgPicture.string(
-                          svg,
-                          color: Colors.white,
-                        )
-                      : Container(
-                          child: Text('Loading'),
-                        ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    AppLocalizations().putFormula,
-                    style: TextStyle(fontSize: 24),
+    return BlocProvider(
+      create: (context) => TitleBloc(),
+      child: Scaffold(
+        appBar: AppBar(),
+        floatingActionButton:
+            BlocBuilder<TitleBloc, TitleState>(builder: (context, state) {
+          if (state is TitleOkS) {
+            return FloatingActionButton(
+              onPressed: () async {
+                final uuid = Uuid().v4();
+                final path = 'formulas/' + uuid + '.svg';
+                var stags = List<String>();
+                final title = _titleController.text;
+                stags.addAll(tags);
+                for (var i = 1; i < 5; i++) {
+                  stags.add(title.substring(0, i));
+                }
+                stags.add(title);
+                final formula = Formula(
+                    path: path,
+                    uid: GetIt.I.get<FirebaseUser>().uid,
+                    tex: _controller.text,
+                    tags: stags,
+                    title: title);
+                print(formula);
+                print('Start uploading');
+                final task = FirebaseStorage.instance
+                    .ref()
+                    .child(path)
+                    .putData(utf8.encode(svg));
+                await task.onComplete;
+                print('Uploaded');
+                await Firestore.instance
+                    .collection('formulas')
+                    .add(formula.toJson());
+                print('added to firebase');
+              },
+              child: Icon(Icons.navigate_next),
+            );
+          } else {}
+          return FloatingActionButton(
+            onPressed: null,
+            child: Icon(Icons.close),
+            backgroundColor: Colors.red,
+          );
+        }),
+        body: SingleChildScrollView(
+          child: Container(
+            child: Center(
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    child: svg != null
+                        ? SvgPicture.string(
+                            svg,
+                            color: Colors.white,
+                          )
+                        : Container(
+                            child: Text('Loading'),
+                          ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: _controller,
-                    decoration:
-                        InputDecoration(labelText: AppLocalizations().formula),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton(
-                    onPressed: () async {
-                      try {
-                        Response response = await Dio().post(
-                            'https://us-central1-education-modeck.cloudfunctions.net/checkFireStorage',
-                            options: Options(
-                                followRedirects: false,
-                                contentType: 'text/plain',
-                                validateStatus: (status) {
-                                  return status < 500;
-                                }),
-                            data: _controller.text);
-                        print(response.statusCode);
-                        print(response.statusMessage);
-                        print(response.data);
-                        if (response.statusCode == 200) {
-                          setState(() {
-                            svg = response.data;
-                          });
-                        }
-                      } catch (e) {
-                        print(e);
-                      }
-                      widget.editor.formatSelection(NotusAttribute.embed
-                          .image('formula±/' + _controller.text));
-                      // Navigator.pop(context);
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => Text('huis')));
-                    },
-                    child: Text(AppLocalizations().render),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    AppLocalizations().addTitle,
-                    style: TextStyle(fontSize: 24),
-                  ),
-                ),
-                Padding(
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TitleEditor(controller: _titleController)),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: TagsEditor(
-                    onAddTag: (tag) {
-                      tags.add(tag);
-                    },
-                    onRemoveTag: (tag) {
-                      tags.remove(tag);
-                    },
+                    child: Text(
+                      AppLocalizations().putFormula,
+                      style: TextStyle(fontSize: 24),
+                    ),
                   ),
-                ),
-                Container(
-                  height: 200,
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations().formula),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      onPressed: () async {
+                        try {
+                          Response response = await Dio().post(
+                              'https://us-central1-education-modeck.cloudfunctions.net/checkFireStorage',
+                              options: Options(
+                                  followRedirects: false,
+                                  contentType: 'text/plain',
+                                  validateStatus: (status) {
+                                    return status < 500;
+                                  }),
+                              data: _controller.text);
+                          print(response.statusCode);
+                          print(response.statusMessage);
+                          print(response.data);
+                          if (response.statusCode == 200) {
+                            setState(() {
+                              svg = response.data;
+                            });
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                        widget.editor.formatSelection(NotusAttribute.embed
+                            .image('formula±/' + _controller.text));
+                        // Navigator.pop(context);
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) => Text('huis')));
+                      },
+                      child: Text(AppLocalizations().render),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      AppLocalizations().addTitle,
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TitleEditor(controller: _titleController)),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: TagsEditor(
+                      onAddTag: (tag) {
+                        tags.add(tag);
+                      },
+                      onRemoveTag: (tag) {
+                        tags.remove(tag);
+                      },
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                  )
+                ],
+              ),
             ),
           ),
         ),

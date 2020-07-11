@@ -1,5 +1,7 @@
 import 'package:education/localization/localizations.dart';
+import 'package:education/widgets/bloc/title_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TitleEditor extends StatefulWidget {
   final TextEditingController controller;
@@ -13,7 +15,9 @@ class _TitleEditorState extends State<TitleEditor> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: (String title) {},
+      onChanged: (String title) {
+        BlocProvider.of<TitleBloc>(context).add(TitleChanged(title));
+      },
       controller: widget.controller,
       maxLength: 120,
       decoration: InputDecoration(

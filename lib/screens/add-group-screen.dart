@@ -95,24 +95,50 @@ class _AddGroupPageState extends State<AddGroupPage> {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                  child: RaisedButton(
-                    color: Colors.teal,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                    onPressed: onPressed,
-                    child: Container(
-                      // width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Add group',
-                        style: TextStyle(
-                          fontSize: 30,
+                  child: BlocBuilder<TitleBloc, TitleState>(
+                      builder: (context, state) {
+                    if (state is TitleOkS) {
+                      return RaisedButton(
+                        color: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
                         ),
-                      ),
-                    ),
-                  ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                        onPressed: () {},
+                        child: Container(
+                          // width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Add group',
+                            style: TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return RaisedButton(
+                        color: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                        onPressed: null,
+                        child: Container(
+                          // width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Add group',
+                            style: TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }),
                 ),
               ],
             ),
