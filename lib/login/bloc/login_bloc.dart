@@ -17,9 +17,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
     @required this.userRepository,
     @required this.authenticationBloc,
-  });
-  @override
-  LoginState get initialState => LLoginInitialS();
+  }) : super(LLoginInitialS());
 
   @override
   Stream<LoginState> mapEventToState(

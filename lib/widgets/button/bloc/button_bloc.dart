@@ -7,17 +7,16 @@ part 'button_event.dart';
 part 'button_state.dart';
 
 class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
-  @override
-  ButtonState get initialState => ButtonEnabled();
+  ButtonBloc() : super(ButtonEnabled());
 
   @override
   Stream<ButtonState> mapEventToState(
     ButtonEvent event,
   ) async* {
-    if(event is BStatusChanged){
-      if(event.isEnabled){
+    if (event is BStatusChanged) {
+      if (event.isEnabled) {
         yield ButtonEnabled();
-      }else{
+      } else {
         yield ButtonDisabled();
       }
     }

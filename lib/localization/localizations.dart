@@ -137,6 +137,14 @@ class AppLocalizations {
     return Intl.message('Add State', name: 'titleAddState');
   }
 
+  String get titleAddGroup {
+    return Intl.message('Add Group', name: 'titleAddGroup');
+  }
+
+  String get formula {
+    return Intl.message('Formula', name: 'formula');
+  }
+
   String get topTextforaddState {
     return Intl.message(
         'Here you can add your state or create a new group for it',
@@ -152,11 +160,20 @@ class AppLocalizations {
   }
 
   String get addTags {
-    return Intl.message('add Tags', name: 'addTags');
+    return Intl.message('Add tags. Use space to separate the tags',
+        name: 'addTags');
+  }
+
+  String get addTitle {
+    return Intl.message('Add title', name: 'addTitle');
   }
 
   String get home {
     return Intl.message('Home', name: 'home');
+  }
+
+  String get tag {
+    return Intl.message('Tag', name: 'tag');
   }
 
   String get more {
@@ -167,6 +184,14 @@ class AppLocalizations {
     return Intl.message(
         'You are in selectable mod, to disable it, push button on top',
         name: 'selectTextNav');
+  }
+
+  String get putFormula {
+    return Intl.message('Put the formula here', name: 'putFormula');
+  }
+
+  String get render {
+    return Intl.message('Render', name: 'render');
   }
 }
 

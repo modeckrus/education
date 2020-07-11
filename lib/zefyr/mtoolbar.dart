@@ -111,11 +111,8 @@ class MDZefyrToolbarDelegate implements ZefyrToolbarDelegate {
 
                 // }
 
-                Scaffold.of(context).showBottomSheet((context) {
-                  return FormulaEditorWidget(
-                    editor: editor,
-                  );
-                });
+                Navigator.pushNamed(context, '/formulaEditor',
+                    arguments: editor);
               },
               child: Icon(Icons.mic),
             ),

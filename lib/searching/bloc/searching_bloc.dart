@@ -9,23 +9,22 @@ part 'searching_event.dart';
 part 'searching_state.dart';
 
 class SearchingBloc extends Bloc<SearchingEvent, SearchingState> {
-  @override
-  SearchingState get initialState => SearchingInitial();
+  SearchingBloc() : super(SearchingInitial());
 
   @override
   Stream<SearchingState> mapEventToState(
     SearchingEvent event,
   ) async* {
-    if(event is Search){
+    if (event is Search) {
       print(event.query);
       var snap = await Firestore.instance
-        .collectionGroup('list')
-        .where('lang', isEqualTo: event.lang)
-        .where('tags', arrayContains: event.query)
-        .limit(5)
-        .orderBy('title')
-        .getDocuments();
-      if(snap.documents.isEmpty){
+          .collectionGroup('list')
+          .where('lang', isEqualTo: event.lang)
+          .where('tags', arrayContains: event.query)
+          .limit(5)
+          .orderBy('title')
+          .getDocuments();
+      if (snap.documents.isEmpty) {
         return;
       }
       print('search');

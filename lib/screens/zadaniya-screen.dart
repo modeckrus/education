@@ -39,7 +39,10 @@ class _ZadaniyaScreenState extends State<ZadaniyaScreen> {
                 text == null
                     ? Text('Press')
                     : Container(
-                        child: SvgPicture.string(text),
+                        child: SvgPicture.string(
+                          text,
+                          color: Colors.white,
+                        ),
                         width: 100,
                         height: 100,
                       ),
@@ -81,6 +84,7 @@ class _ZadaniyaScreenState extends State<ZadaniyaScreen> {
                     // setState(() {
                     //   text = response.body;
                     // });
+
                     try {
                       Response response = await Dio().post(
                           'https://us-central1-education-modeck.cloudfunctions.net/checkFireStorage',

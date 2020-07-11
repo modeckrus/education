@@ -14,9 +14,8 @@ class SettinguserBloc extends Bloc<SettinguserEvent, SettinguserState> {
   final UserRepository userRepository;
   final AuthenticationBloc authenticationBloc;
 
-  SettinguserBloc(this.userRepository, this.authenticationBloc);
-  @override
-  SettinguserState get initialState => NextButtonFailS();
+  SettinguserBloc(this.userRepository, this.authenticationBloc)
+      : super(NextButtonFailS());
 
   @override
   Stream<SettinguserState> mapEventToState(
@@ -42,21 +41,24 @@ class SettinguserBloc extends Bloc<SettinguserEvent, SettinguserState> {
       @required String nick,
       @required String surname,
       @required String avatar}) async* {
-        try{
-        yield NextButtonLoadingS();
-        final user = await userRepository.getUser();
-        await Firestore.instance.collection('user').document(user.uid).updateData({
-          'Avatar': avatar,
-          'Name':name,
-          'Nick':nick,
-          'Surname':surname,
-          'IsSetted': true,
-        });
-        authenticationBloc.add(LoggedIn());
-        }catch(e){
-          yield NextButtonErrorS();
-          await Future.delayed(Duration(seconds: 1));
-          yield NextButtonOkS();
-        }
-      }
+    try {
+      yield NextButtonLoadingS();
+      final user = await userRepository.getUser();
+      await Firestore.instance
+          .collection('user')
+          .document(user.uid)
+          .updateData({
+        'Avatar': avatar,
+        'Name': name,
+        'Nick': nick,
+        'Surname': surname,
+        'IsSetted': true,
+      });
+      authenticationBloc.add(LoggedIn());
+    } catch (e) {
+      yield NextButtonErrorS();
+      await Future.delayed(Duration(seconds: 1));
+      yield NextButtonOkS();
+    }
+  }
 }

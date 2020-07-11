@@ -7,6 +7,7 @@ import 'package:education/screens/theorems-screen.dart';
 import 'package:education/screens/zadaniya-screen.dart';
 import 'package:education/user_repository.dart';
 import 'package:education/zefyr/editor-page.dart';
+import 'package:education/zefyr/formula-editor-widget.dart';
 import 'package:education/zefyr/reading-page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbols.dart';
@@ -57,6 +58,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddStateScreen(doc: args));
       case '/addgroup':
         return MaterialPageRoute(builder: (_) => AddGroupPage(doc: args));
+      case '/formulaEditor':
+        return MaterialPageRoute(
+            builder: (_) => FormulaEditorWidget(
+                  editor: args,
+                ));
       default:
         return MaterialPageRoute(builder: (_) => ErrorScreen());
         break;
