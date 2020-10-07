@@ -8,6 +8,7 @@ class Validators {
   static final RegExp _nickRegExp = RegExp(
     '[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð]',
   );
+  static final RegExp _titleRegExp = RegExp('');
 
   static bool isValidEmail(String email) {
     return _emailRegExp.hasMatch(email);
@@ -16,7 +17,13 @@ class Validators {
   static bool isValidPassword(String password) {
     return _passwordRegExp.hasMatch(password);
   }
-  static bool isValidNick(String nick){
+
+  static bool isValidNick(String nick) {
     return _nickRegExp.hasMatch(nick);
+  }
+
+  static bool isTitleValid(String title) {
+    return true;
+    //return _nickRegExp.hasMatch(title);
   }
 }

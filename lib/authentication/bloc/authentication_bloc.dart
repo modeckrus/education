@@ -14,7 +14,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository userRepository;
 
-  AuthenticationBloc({@required this.userRepository});
+  AuthenticationBloc({@required this.userRepository}) : super(Uninitialized());
   @override
   AuthenticationState get initialState => Uninitialized();
 
