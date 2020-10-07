@@ -38,9 +38,17 @@ class AuthenticationBloc
       final isSignedIn = await userRepository.isSignedIn();
       if (isSignedIn) {
         final user = await userRepository.getUser();
+        if (GetIt.I.isRegistered<FirebaseUser>()) {
+          GetIt.I.unregister<FirebaseUser>();
+        }
+        GetIt.I.registerSingleton<FirebaseUser>(user);
         yield Authenticated(user);
       } else {
         final user = await userRepository.anonAuth();
+        if (GetIt.I.isRegistered<FirebaseUser>()) {
+          GetIt.I.unregister<FirebaseUser>();
+        }
+        GetIt.I.registerSingleton<FirebaseUser>(user);
         yield Authenticated(user);
         //yield Unauthenticated();
       }

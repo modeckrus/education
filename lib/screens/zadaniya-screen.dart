@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:education/models/formula.dart';
 import 'package:education/service/fstorage-cache-manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class ZadaniyaScreen extends StatefulWidget {
   ZadaniyaScreen({Key key}) : super(key: key);
@@ -44,11 +48,16 @@ class _ZadaniyaScreenState extends State<ZadaniyaScreen> {
                     // setState(() {
                     //   text = utf8.decode(data);
                     // });
-                    final file =
-                        await FStoreCacheManager().getFStoreFile('test.json');
-                    setState(() {
-                      text = file.readAsStringSync();
-                    });
+                    final formula = Formula(
+                        formula: 'a + b',
+                        title: 'Test',
+                        uid: GetIt.I.get<FirebaseUser>().uid,
+                        tags: ['Test'],
+                        state: 'process');
+                    print(formula);
+                    Firestore.instance
+                        .collection('formulas')
+                        .add(formula.toJSON());
                   },
                   child: Text('download the file'),
                 ),
